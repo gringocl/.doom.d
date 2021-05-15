@@ -178,7 +178,7 @@
   (setq org-reveal-root "Users/miles/Projects/reveal.js")
   )
 
-(use-package! lsp-tailwindcss :init (setq! lsp-tailwindcss-add-on-mode t))
+(use-package! lsp-tailwindcss :init (setq! lsp-tailwindcss-server-version "0.5.10"))
 
 (setq flycheck-stylelintrc "assets/.stylelintrc.json")
 (after! (:any css-mode scss-mode)
@@ -195,5 +195,3 @@
   (setq truncate-lines nil) ;; automatically becomes buffer local
   (set (make-local-variable 'truncate-partial-width-windows) nil))
 (add-hook 'compilation-mode-hook 'my-compilation-mode-hook)
-
-;; (setq-hook! 'elixir-mode-hook +format-with-lsp nil)
