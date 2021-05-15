@@ -178,7 +178,7 @@
   (setq org-reveal-root "Users/miles/Projects/reveal.js")
   )
 
-(use-package! lsp-tailwindcss :init (setq! lsp-tailwindcss-server-version "0.5.10"))
+(use-package! lsp-tailwindcss :init (setq! lsp-tailwindcss-server-version "0.5.10") (setq! lsp-tailwindcss-add-on-mode t))
 
 (setq flycheck-stylelintrc "assets/.stylelintrc.json")
 (after! (:any css-mode scss-mode)
