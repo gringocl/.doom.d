@@ -56,4 +56,4 @@
 (package! exunit)
 (package! ox-reveal)
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
-(disable-packages! alchemist alchemist-company)
+(disable-packages! alchemist-company)
