@@ -64,8 +64,7 @@
 ;; Hybrid mode in insert mode
 (use-package evil
   :custom
-  evil-disable-insert-state-bindings t
-  )
+  evil-disable-insert-state-bindings t)
 
 ;; tmux style movements
 (map! "C-h" 'windmove-left
@@ -78,7 +77,12 @@
 
 (map! "C-<return>" 'ivy-immediate-done)
 
-(add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+(after! js2-mode
+  (defun my-js2-mode-hook ()
+    (setq js2-basic-offset 2)
+    (prettier-js-mode))
+
+  (add-hook 'js2-mode-hook  'my-js2-mode-hook))
 
 (map! :localleader
       :map tide-mode-map
@@ -106,29 +110,19 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-;; (setq web-mode-engines-alist '(("elixir" . "\\.[le]?ex\\'")))
-
-;; ;;; elixir-web-modes
-;; (sp-with-modes 'elixir-mode
-;;   (sp-local-pair "<%" "%>")
-;;   (sp-local-pair "<" ">"))
-
-;; (use-package emmet-mode
-;;   :hook (poly-elixir-web-mode))
-
 (after! web-mode
   (defun my-web-mode-hook ()
     (setq web-mode-markup-indent-offset 2
           web-mode-css-indent-offset 2
           web-mode-scss-indent-offset 2
-          web-mode-code-indent-offset 2))
+          web-mode-code-indent-offset 2)
+    (prettier-js-mode))
 
   (add-hook 'web-mode-hook  'my-web-mode-hook))
 
 (use-package lsp-mode
   :hook (elixir-mode . lsp)
   :commands (lsp lsp-deferred)
-  ;; :ensure t
   :diminish lsp-mode
   :config
   (add-to-list 'exec-path "~/Projects/elixir-ls/release")
@@ -138,17 +132,19 @@
   (add-to-list 'lsp-file-watch-ignored "[/\\\\]pgdata")
   (add-to-list 'lsp-file-watch-ignored "[/\\\\].elixir_ls")
   (add-to-list 'lsp-file-watch-ignored "[/\\\\].elixir_ls")
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]assets/node_modules")
-  :init
-  )
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]assets/node_modules"))
 
 (defvar org-projectile-file "TODOs.org")
+
 (use-package org-projectile
-  :commands (org-projectile-location-for-project)
+  :commands
+  (org-projectile-location-for-project)
+
   :init
   (progn
     (with-eval-after-load 'org-capture
       (require 'org-projectile)))
+
   :config
   (if (file-name-absolute-p org-projectile-file)
       (progn
@@ -157,6 +153,7 @@
               org-capture-templates))
     (org-projectile-per-project)
     (setq org-projectile-per-project-filepath org-projectile-file))
+
   (map! :leader
         (:prefix "p"
          :desc "Open project TODO" "o" #'org-projectile/goto-todos
@@ -178,20 +175,37 @@
   (setq org-reveal-root "Users/miles/Projects/reveal.js")
   )
 
-(use-package! lsp-tailwindcss :init (setq! lsp-tailwindcss-server-version "0.5.10") (setq! lsp-tailwindcss-add-on-mode t))
+(use-package! lsp-tailwindcss
+  :init
+  (setq! lsp-tailwindcss-server-version "0.5.10"
+         lsp-tailwindcss-add-on-mode t))
 
-(setq flycheck-stylelintrc "assets/.stylelintrc.json")
+(use-package! prettier-js)
+
+;; (setq flycheck-stylelintrc "assets/.stylelintrc.json")
+
 (after! (:any css-mode scss-mode)
   (add-hook 'css-mode-local-vars-hook
             (lambda ()
               (flycheck-select-checker 'css-stylelint)))
   (add-hook 'scss-mode-local-vars-hook
             (lambda ()
-              (flycheck-select-checker 'scss-stylelint)))
-  )
+              (flycheck-select-checker 'scss-stylelint))))
 
 ;; wrap lines in output buffers
 (defun my-compilation-mode-hook ()
   (setq truncate-lines nil) ;; automatically becomes buffer local
   (set (make-local-variable 'truncate-partial-width-windows) nil))
+
 (add-hook 'compilation-mode-hook 'my-compilation-mode-hook)
+
+;; no-spam
+(use-package! no-spam
+  :config
+  (setq no-spam-default-repeat-delay 20)
+  (no-spam-add-repeat-delay evil-next-line)
+  (no-spam-add-repeat-delay evil-previous-line)
+  (no-spam-add-repeat-delay evil-forward-char)
+  (no-spam-add-repeat-delay evil-backward-char)
+  :init
+  (no-spam-mode))

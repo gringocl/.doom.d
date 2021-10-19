@@ -53,7 +53,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format +onsave)  ; automated prettiness
+       ;; (format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -139,7 +139,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org)             ; organize your plain life in plain text_
+       (org             ; organize your plain life in plain text_
         ;; +dragndrop       ; drag & drop files/images into org buffers
         ;; +journal
         ;;+hugo            ; use Emacs for hugo blogging
@@ -147,7 +147,8 @@
         ;;+pandoc          ; export-with-pandoc support
         ;; +pomodoro        ; be fruitful with the tomato technique
         ;; +roam)
-        ;; +present)        ; using org-mode for presentations
+        +pretty
+        +present)        ; using org-mode for presentations
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -182,3 +183,4 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+

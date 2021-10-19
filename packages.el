@@ -51,9 +51,11 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 ;;
 
-(package! polymode)
 (package! org-projectile)
 (package! exunit)
 (package! ox-reveal)
+(package! prettier-js)
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+(package! esup)
+(package! no-spam)
 (disable-packages! alchemist-company)
