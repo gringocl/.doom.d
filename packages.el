@@ -54,6 +54,7 @@
 (package! org-projectile)
 (package! exunit)
 (package! ox-reveal)
+
 (package! prettier-js)
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 (package! esup)

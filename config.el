@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Source Code Pro" :size 14))
+(setq doom-font (font-spec :family "Azeret Mono" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -31,7 +31,7 @@
 (setq roam-dir "~/org/roam")
 (setq org-directory "~/org/"
       org-roam-directory roam-dir
-      org-journal-dir roam-dir
+      org-journal-dir "~/org/journal"
       deft-directory roam-dir)
 
 (setq org-journal-date-prefix "#+title: "
@@ -199,13 +199,18 @@
 
 (add-hook 'compilation-mode-hook 'my-compilation-mode-hook)
 
+(defun is-note-mode-p ()
+  (if
+      (or (derived-mode-p 'org-mode) (derived-mode-p 'markdown-mode)) t))
 ;; no-spam
-(use-package! no-spam
-  :config
-  (setq no-spam-default-repeat-delay 20)
-  (no-spam-add-repeat-delay evil-next-line)
-  (no-spam-add-repeat-delay evil-previous-line)
-  (no-spam-add-repeat-delay evil-forward-char)
-  (no-spam-add-repeat-delay evil-backward-char)
-  :init
-  (no-spam-mode))
+;; (use-package! no-spam
+;;   :config
+;;   (setq no-spam-default-repeat-delay 5)
+;;   (no-spam-add-repeat-delay
+;;    (evil-next-line evil-previous-line)
+;;    nil
+;;    is-note-mode-p)
+;;   (no-spam-add-repeat-delay evil-forward-char)
+;;   (no-spam-add-repeat-delay evil-backward-char)
+;;   :init
+;;   (no-spam-mode))

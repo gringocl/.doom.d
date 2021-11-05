@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-date
+# key: ld
+# --
+`(format-time-string "%a %b %d %Y")`
